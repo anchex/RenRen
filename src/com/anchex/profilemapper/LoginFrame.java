@@ -21,11 +21,12 @@ public class LoginFrame extends JFrame
 {
 	private JWebBrowser browser;
 	private JPanel mainPanel;
+	private Main main;
 	
-	public LoginFrame()
+	public LoginFrame(Main initMain)
 	{
 		super("Login");
-		
+		main = initMain;
 		layoutGUI();
 		//setExtendedState(MAXIMIZED_BOTH);
 		setSize(800,360);
@@ -70,7 +71,7 @@ public class LoginFrame extends JFrame
 	{
 		url = url.substring(url.indexOf("#")+1);
 		String[] parameter = url.split("&");
-		Main.setToken(parameter[0].substring(parameter[0].indexOf("=")+1));
+		main.setToken(parameter[0].substring(parameter[0].indexOf("=")+1));
 		
 	}
 	
