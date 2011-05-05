@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -28,10 +29,6 @@ public class LoginFrame extends JFrame
 		super("Login");
 		main = initMain;
 		layoutGUI();
-		//setExtendedState(MAXIMIZED_BOTH);
-		setSize(800,360);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		
 	}
 	
@@ -43,13 +40,15 @@ public class LoginFrame extends JFrame
 		setListener();
 		mainPanel.add(browser);
 		add(mainPanel, BorderLayout.CENTER);
-		
+		pack();
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setResizable(false);
 	}
 	
 	private void initBrowser()
 	{
 		browser = new JWebBrowser();
-		
 		browser.setBarsVisible(false);
 		browser.setJavascriptEnabled(true);
 	}
