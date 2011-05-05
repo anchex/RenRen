@@ -1,4 +1,4 @@
-package com.anchex.profilemapper;
+package com.anchex.profilemapper.frames;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,6 +9,8 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.anchex.profilemapper.Main;
 
 import chrriis.dj.nativeswing.swtimpl.components.JWebBrowser;
 import chrriis.dj.nativeswing.swtimpl.components.WebBrowserCommandEvent;
@@ -56,15 +58,11 @@ public class LoginFrame extends JFrame
 	
 	public void setNavigate(String url)
 	{
-//		browser.navigate(url);
 		Map<String, String> headersMap = new HashMap<String, String>();
         headersMap.put("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.60 Safari/534.24");
         WebBrowserNavigationParameters p = new WebBrowserNavigationParameters();
         p.setHeaders(headersMap);
         browser.navigate(url, p);
-		
-		
-		
 	}
 	
 	private void setToken(String url)

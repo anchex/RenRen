@@ -13,6 +13,7 @@ import chrriis.common.UIUtils;
 import chrriis.dj.nativeswing.NativeSwing;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
+import com.anchex.profilemapper.frames.LoginFrame;
 import com.renren.api.client.RenrenApiConfig;
 
 
