@@ -9,8 +9,8 @@ public class RenrenApiConfig {
 
     public static String renrenApiVersion = "1.0";
 
-    public static String renrenApiKey = null;
+    public static String renrenApiKey = "abc";
 
-    public static String renrenApiSecret = null;
+    public static String renrenApiSecret = "abc";
 
 }
