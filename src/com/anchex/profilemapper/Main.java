@@ -1,8 +1,10 @@
 package com.anchex.profilemapper;
 import java.awt.Desktop;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -44,6 +46,7 @@ public class Main
 		});
 	     NativeInterface.runEventPump(); 
 	}
+	
 	public static String authorizedURL()
 	{
 		String type = "&response_type=token&";
@@ -54,10 +57,12 @@ public class Main
 		return url;
 	}
 	
-	public void setToken(String t)
+	public void setToken(String t) throws UnsupportedEncodingException
 	{
 		token = t;
+		token = URLDecoder.decode(token, "UTF-8");
 		System.out.println("token = "+token);
+		loginFrame.dispose();
 		JOptionPane.showMessageDialog(null, "token has been setted.\n"+token);
 	}
 }

@@ -2,6 +2,7 @@ package com.anchex.profilemapper;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,8 +71,11 @@ public class LoginFrame extends JFrame
 	{
 		url = url.substring(url.indexOf("#")+1);
 		String[] parameter = url.split("&");
-		main.setToken(parameter[0].substring(parameter[0].indexOf("=")+1));
-		
+		try
+		{
+			main.setToken(parameter[0].substring(parameter[0].indexOf("=")+1));
+		}
+		catch(UnsupportedEncodingException e){}
 	}
 	
 	
