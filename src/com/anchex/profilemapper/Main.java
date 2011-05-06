@@ -9,12 +9,16 @@ import java.net.URLDecoder;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+
 import chrriis.common.UIUtils;
 import chrriis.dj.nativeswing.NativeSwing;
 import chrriis.dj.nativeswing.swtimpl.NativeInterface;
 
 import com.anchex.profilemapper.frames.LoginFrame;
 import com.renren.api.client.RenrenApiConfig;
+import com.renren.api.client.utils.HttpURLUtils;
 
 
 public class Main 
@@ -22,7 +26,7 @@ public class Main
 	private static final String API_KEY = RenrenApiConfig.renrenApiKey;
 	private static final String API_SEC = RenrenApiConfig.renrenApiSecret;
 	private LoginFrame loginFrame;
-	private String token;
+	private String token, sessionKey;
 
 	/**
 	 * @param args
@@ -65,5 +69,22 @@ public class Main
 		System.out.println("token = "+token);
 		loginFrame.dispose();
 		JOptionPane.showMessageDialog(null, "token has been setted.\n"+token);
+		setSessionKey();
+	}
+	
+	public void setSessionKey()
+	{
+		String link = "https://graph.renren.com/renren_api/session_key?oauth_token="+token;
+		String response = HttpURLUtils.doGet(link);
+		
+		System.out.println(response);
+		JSONObject jObj = (JSONObject)JSONValue.parse(response);
+		JSONObject renren = (JSONObject) jObj.get("renren_token");
+		sessionKey = (String) renren.get("session_key");
+		
+		System.out.println(sessionKey+"\n\n");
+		
+		new Test(sessionKey);
+		
 	}
 }
