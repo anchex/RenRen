@@ -1,10 +1,14 @@
 package com.anchex.profilemapper;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.sql.SQLException;
 import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import com.anchex.profilemapper.sql.MySQL;
 import com.renren.api.client.RenrenApiClient;
 import com.renren.api.client.services.FriendsService;
 
@@ -12,12 +16,20 @@ public class Test {
 	
 	private String sessionKey;
 	private RenrenApiClient client;
+	private MySQL sql;
 	
 	public Test(String key)
 	{
 		sessionKey = key;
 		client = new RenrenApiClient(sessionKey);
-		
+		sql = new MySQL("anchex.com/anchexco_test?useUnicode=true&characterEncoding=utf8",
+				"anchexco_test","123");
+		try {
+			sql.getConnected();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		test();
 		
 	}
@@ -31,8 +43,23 @@ public class Test {
 		while(it.hasNext())
 		{
 			JSONObject people = (JSONObject) it.next();
-			String name = (String) people.get("name");
-			System.out.println(name);
+			String name = "\""+(String) people.get("name")+"\"";
+			Long id = (Long)people.get("id");
+			String headurl = "\""+(String) people.get("headurl")+"\"";
+			String tinyurl = "\""+(String) people.get("tinyurl")+"\"";
+			
+			String c = "INSERT INTO renren VALUES ("+id+", "+name+", "+headurl+", "+tinyurl+");";
+			
+			
+			sql.setCommand(c);
+			try {
+				sql.excute();
+				System.out.println(c);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 	}
