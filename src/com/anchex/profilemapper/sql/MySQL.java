@@ -5,25 +5,41 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MySQL
 {
-	public String url = "jdbc:mysql://";
-	public String user;
-	public String password ;
-	public String e;
-	public Connection connection;
-	public Statement statement;
-	public ResultSet result;
+	private final String utf = "?useUnicode=true&characterEncoding=utf8";
+	private String url = "jdbc:mysql://";
+	private String user;
+	private String password ;
+	private String e;
+	private Connection connection;
+	private Statement statement;
+	private ResultSet result;
+	private boolean useUTF;
 	
 	
 	public MySQL(){}
 	
 	public MySQL(String u, String m, String p)
 	{
-		url += u;
+		url += u + utf;
 		user = m;
 		password = p;
+		useUTF = true;
+	}
+	
+	public MySQL(String u, String m, String p, boolean useutf)
+	{
+		if (useutf)
+			url += u + utf;
+		else 
+			url += u;
+		user = m;
+		password = p;
+		useUTF = useutf;
 	}
 	
 	public MySQL getConnected() throws SQLException
@@ -41,11 +57,45 @@ public class MySQL
 	
 	public void excute() throws SQLException
 	{
-//		result = statement.executeQuery(e);
-//		return result;
+		statement.execute(e);
+	}
+	
+	public ResultSet excuteQuery() throws SQLException
+	{
+		result = statement.executeQuery(e);
+		return result;
+	}
+	
+	public ResultSet getResultSet()
+	{
+		return result;
+	}
+	
+	public void insert(String tableName,Map<String,String> map) throws SQLException
+	{
+		String title = "INSERT INTO "+tableName+" ";
+		String key = "(";
+		String value = "(";
+		Iterator<String> itKey = map.keySet().iterator();
+		while(itKey.hasNext())
+		{
+			String k = itKey.next();
+			key += k+", ";
+			value += map.get(k) + ", ";
+		}
+		key = key.substring(0, key.length()-2);
+		key += ")";
+		value = value.substring(0, value.length()-2);
+		value += ")";
+		
+		String e = title + key + " VALUES " + value;
 		statement.execute(e);
 		
 	}
+	
+	
+	
+	
 	
 	public static void main(String arg[])
 	{
